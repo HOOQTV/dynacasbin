@@ -1,7 +1,6 @@
 package dynamodbadapter
 
 import (
-	"log"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -11,7 +10,6 @@ import (
 
 func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {
 	myRes := e.GetPolicy()
-	log.Print("Policy: ", myRes)
 
 	if !util.Array2DEquals(res, myRes) {
 		t.Error("Policy: ", myRes, ", supposed to be ", res)

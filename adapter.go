@@ -131,6 +131,7 @@ func (a *Adapter) SavePolicy(model model.Model) error {
 	}
 
 	_, err := a.saveItems(lines)
+	a.LoadPolicy(model)
 	return err
 }
 

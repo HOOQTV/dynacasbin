@@ -22,7 +22,7 @@ func main() {
 	// Initialize a DynamoDB adapter and use it in a Casbin enforcer:
 	config := &aws.Config{} // Your AWS configuration
 	ds := "casbin-rules"
-	a := dynacasbin.NewAdapter(config, ds) // Your Redis network and address.
+	a := dynacasbin.NewAdapter(config, ds) // Your aws configuration and data source.
 	e := casbin.NewEnforcer("examples/rbac_model.conf", a)
 
 	// Load the policy from DB.
