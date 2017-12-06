@@ -2,6 +2,7 @@ package dynamodbadapter
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 
 	"github.com/casbin/casbin/model"
@@ -11,7 +12,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	uuid "github.com/satori/go.uuid"
 )
 
 type (
@@ -69,43 +69,50 @@ func loadPolicyLine(line CasbinRule, model model.Model) {
 	persist.LoadPolicyLine(lineText, model)
 }
 
-func (a *Adapter) LoadPolicy(model model.Model) {
+func (a *Adapter) LoadPolicy(model model.Model) error {
 	p, err := a.getAllItems()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	for _, v := range p {
 		loadPolicyLine(v, model)
 	}
 
-	return
+	return nil
 }
 
 func savePolicyLine(ptype string, rule []string) CasbinRule {
-	line := CasbinRule{
-		ID: uuid.NewV4().String(),
-	}
+	id := fmt.Sprintf("%s", ptype)
+	line := CasbinRule{}
 
 	line.PType = ptype
 	if len(rule) > 0 {
 		line.V0 = rule[0]
+		id = fmt.Sprintf("%s%s", id, rule[0])
 	}
 	if len(rule) > 1 {
 		line.V1 = rule[1]
+		id = fmt.Sprintf("%s%s", id, rule[1])
 	}
 	if len(rule) > 2 {
 		line.V2 = rule[2]
+		id = fmt.Sprintf("%s%s", id, rule[2])
 	}
 	if len(rule) > 3 {
 		line.V3 = rule[3]
+		id = fmt.Sprintf("%s%s", id, rule[3])
 	}
 	if len(rule) > 4 {
 		line.V4 = rule[4]
+		id = fmt.Sprintf("%s%s", id, rule[4])
 	}
 	if len(rule) > 5 {
 		line.V5 = rule[5]
+		id = fmt.Sprintf("%s%s", id, rule[5])
 	}
+
+	line.ID = id
 
 	return line
 }

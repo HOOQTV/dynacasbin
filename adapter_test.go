@@ -20,6 +20,7 @@ func TestAdapter(t *testing.T) {
 	// load from CSV file
 	e := casbin.NewEnforcer("examples/rbac_model.conf", "examples/rbac_policy.csv")
 
+	// your local dynamodb installation
 	dbEndpoint := "http://localhost:14045"
 	region := "ap-southeast-1"
 
