@@ -83,8 +83,9 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 }
 
 func savePolicyLine(ptype string, rule []string) CasbinRule {
+	id, _ := uuid.NewV4()
 	line := CasbinRule{
-		ID: uuid.NewV4().String(),
+		ID: id.String(),
 	}
 
 	line.PType = ptype
