@@ -4,6 +4,8 @@ import (
 	"errors"
 	"regexp"
 
+	"github.com/google/uuid"
+
 	"github.com/casbin/casbin/model"
 	"github.com/casbin/casbin/persist"
 	"github.com/guregu/dynamo"
@@ -11,7 +13,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	uuid "github.com/satori/go.uuid"
 )
 
 type (
@@ -83,8 +84,9 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 }
 
 func savePolicyLine(ptype string, rule []string) CasbinRule {
+	id := uuid.New().String()
 	line := CasbinRule{
-		ID: uuid.NewV4().String(),
+		ID: id,
 	}
 
 	line.PType = ptype
