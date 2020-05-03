@@ -70,17 +70,17 @@ func loadPolicyLine(line CasbinRule, model model.Model) {
 	persist.LoadPolicyLine(lineText, model)
 }
 
-func (a *Adapter) LoadPolicy(model model.Model) {
+func (a *Adapter) LoadPolicy(model model.Model) error {
 	p, err := a.getAllItems()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	for _, v := range p {
 		loadPolicyLine(v, model)
 	}
 
-	return
+	return nil
 }
 
 func savePolicyLine(ptype string, rule []string) CasbinRule {
