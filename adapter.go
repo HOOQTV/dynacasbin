@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/casbin/casbin/model"
-	"github.com/casbin/casbin/persist"
+	"github.com/casbin/casbin/v2/model"
+	"github.com/casbin/casbin/v2/persist"
 	"github.com/guregu/dynamo"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -70,17 +70,17 @@ func loadPolicyLine(line CasbinRule, model model.Model) {
 	persist.LoadPolicyLine(lineText, model)
 }
 
-func (a *Adapter) LoadPolicy(model model.Model) {
+func (a *Adapter) LoadPolicy(model model.Model) error {
 	p, err := a.getAllItems()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	for _, v := range p {
 		loadPolicyLine(v, model)
 	}
 
-	return
+	return nil
 }
 
 func savePolicyLine(ptype string, rule []string) CasbinRule {
