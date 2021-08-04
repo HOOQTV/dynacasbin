@@ -1,6 +1,8 @@
 DynamoDB Adapter
 ====
 
+**Migrated to https://github.coupang.net/coupang/couplay-dynacasbin**
+
 DynamoDB Adapter is the [DynamoDB](https://aws.amazon.com/dynamodb/) adapter for [Casbin](https://github.com/casbin/casbin). With this library, Casbin can load policy from DynamoDB or save policy to it.
 
 ## Installation
